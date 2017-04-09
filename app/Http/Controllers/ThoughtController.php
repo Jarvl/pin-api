@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\Pin;
 use Validator;
@@ -64,10 +65,10 @@ class ThoughtController extends ApiController
         }
 
         $this->validator = Validator::make($request->all(), [
-            "pin_id" => "nullable|integer",
+            "pin_id" => "required|integer",
             "poster_name" => "nullable|string",
             "thought_text" => "required|string",
-            "photo_url" => "nullable|string"
+            "image" => "nullable"
         ]);
         if ($this->validator->fails()) {
             return $this->getApiResponse(400, 'Validation errors');
@@ -76,6 +77,16 @@ class ThoughtController extends ApiController
         $thought = new Thought;
         $thought->fill($request->all());
         $thought->pin_id = $parentId;
+
+        // Upload to s3
+        /*$image = $request->file('image');
+        $image_file_name = $this->generateGUID() . '.' . $image->getClientOriginalExtension();
+        $file_path = "/thoughts/$image_file_name";
+
+        $s3 = Storage::disk('s3');
+        $s3->put($file_path, file_get_contents($image), 'public');
+
+        $thought->photo_url = Storage::url($file_path);*/
         $thought->save();
 
         $this->data = array(
