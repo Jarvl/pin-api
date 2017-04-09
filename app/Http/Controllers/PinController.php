@@ -69,7 +69,7 @@ class PinController extends ApiController
     public function show($id)
     {
         $pin = Pin::where('pin_id', '=', $id)
-            ->with('thoughts')
+            ->with('thots')
             ->first();
         if (empty($pin)) {
             return $this->getApiResponse(400, 'A pin with that id does not exist');

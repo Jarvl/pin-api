@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 use App\Pin;
 use Validator;
-use App\Thought;
+use App\Thot;
 
-class ThoughtController extends ApiController
+class ThotController extends ApiController
 {
 
     /**
@@ -26,7 +26,7 @@ class ThoughtController extends ApiController
             return $this->getApiResponse(400, 'A pin with that id does not exist');
         }
 
-        $this->data = Thought::where('pin_id', '=', $parentId)
+        $this->data = Thot::where('pin_id', '=', $parentId)
             ->get()
             ->toArray();
         return $this->getApiResponse();
@@ -67,16 +67,16 @@ class ThoughtController extends ApiController
         $this->validator = Validator::make($request->all(), [
             "pin_id" => "required|integer",
             "poster_name" => "nullable|string",
-            "thought_text" => "required|string",
+            "thot_text" => "required|string",
             "photo_url" => "nullable"
         ]);
         if ($this->validator->fails()) {
             return $this->getApiResponse(400, 'Validation errors');
         }
 
-        $thought = new Thought;
-        $thought->fill($request->all());
-        $thought->pin_id = $parentId;
+        $thot = new Thot;
+        $thot->fill($request->all());
+        $thot->pin_id = $parentId;
 
         // Upload to s3
         /*$image = $request->file('image');
@@ -86,11 +86,11 @@ class ThoughtController extends ApiController
         $s3 = Storage::disk('s3');
         $s3->put($file_path, file_get_contents($image), 'public');
 
-        $thought->photo_url = Storage::url($file_path);*/
-        $thought->save();
+        $thot->photo_url = Storage::url($file_path);*/
+        $thot->save();
 
         $this->data = array(
-            'thought_id' => $thought->thought_id
+            'thot_id' => $thot->thot_id
         );
         return $this->getApiResponse();
     }

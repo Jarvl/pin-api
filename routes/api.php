@@ -18,4 +18,4 @@ use Illuminate\Http\Request;
 });*/
 
 Route::resource('pins', 'PinController');
-Route::resource('pins.thoughts', 'ThoughtController');
+Route::resource('pins.thots', 'ThotController');

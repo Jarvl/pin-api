@@ -4,16 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Thought extends Model
+class Thot extends Model
 {
-    protected $table = 'thoughts';
+    protected $table = 'thots';
 
-    protected $primaryKey = 'thought_id';
+    protected $primaryKey = 'thot_id';
 
     protected $fillable = [
         'pin_id',
         'poster_name',
-        'thought_text',
+        'thot_text',
         'photo_url'
     ];
 

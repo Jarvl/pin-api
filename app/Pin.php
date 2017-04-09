@@ -19,9 +19,9 @@ class Pin extends Model
         'source',
     ];
 
-    public function thoughts()
+    public function thots()
     {
-        return $this->hasMany('App\Thought', 'pin_id');
+        return $this->hasMany('App\Thot', 'pin_id');
     }
 
     public function scopeSource($query, $source_name)
