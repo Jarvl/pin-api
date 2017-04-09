@@ -68,7 +68,7 @@ class ThoughtController extends ApiController
             "pin_id" => "required|integer",
             "poster_name" => "nullable|string",
             "thought_text" => "required|string",
-            "image" => "nullable"
+            "photo_url" => "nullable"
         ]);
         if ($this->validator->fails()) {
             return $this->getApiResponse(400, 'Validation errors');
