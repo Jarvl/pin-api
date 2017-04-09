@@ -15,7 +15,8 @@ class PinController extends ApiController
      */
     public function index()
     {
-        $this->data = Pin::get()->toArray();
+        $this->data = Pin::get()
+            ->toArray();
         return $this->getApiResponse();
     }
 
@@ -45,7 +46,6 @@ class PinController extends ApiController
             "latitude" => "regex:/^-?\d{1,2}\.\d{6,}$/",
             "source" => "nullable|string"
         ]);
-
         if ($this->validator->fails()) {
             return $this->getApiResponse(400, 'Validation errors');
         }
@@ -53,6 +53,7 @@ class PinController extends ApiController
         $pin = new Pin;
         $pin->fill($request->all());
         $pin->save();
+
         return $this->getApiResponse();
     }
 
@@ -65,6 +66,7 @@ class PinController extends ApiController
     public function show($id)
     {
         $pin = Pin::where('pin_id', '=', $id)
+            ->with('thoughts')
             ->first();
         if (empty($pin)) {
             return $this->getApiResponse(400, 'A pin with that id does not exist');

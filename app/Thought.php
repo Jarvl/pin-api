@@ -14,6 +14,7 @@ class Thought extends Model
         'pin_id',
         'poster_name',
         'thought_text',
+        'photo_url'
     ];
 
     public function pin()

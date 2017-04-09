@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Pin;
+use Validator;
 use App\Thought;
 
 class ThoughtController extends ApiController
@@ -24,7 +25,10 @@ class ThoughtController extends ApiController
             return $this->getApiResponse(400, 'A pin with that id does not exist');
         }
 
-
+        $this->data = Thought::where('pin_id', '=', $parentId)
+            ->get()
+            ->toArray();
+        return $this->getApiResponse();
     }
 
     /**
@@ -59,7 +63,22 @@ class ThoughtController extends ApiController
             return $this->getApiResponse(400, 'A pin with that id does not exist');
         }
 
+        $this->validator = Validator::make($request->all(), [
+            "pin_id" => "nullable|integer",
+            "poster_name" => "nullable|string",
+            "thought_text" => "required|string",
+            "photo_url" => "nullable|string"
+        ]);
+        if ($this->validator->fails()) {
+            return $this->getApiResponse(400, 'Validation errors');
+        }
 
+        $thought = new Thought;
+        $thought->fill($request->all());
+        $thought->pin_id = $parentId;
+        $thought->save();
+
+        return $this->getApiResponse();
     }
 
     /**

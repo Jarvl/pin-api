@@ -21,7 +21,7 @@ class Pin extends Model
 
     public function thoughts()
     {
-        return $this->hasMany('App\Thought');
+        return $this->hasMany('App\Thought', 'pin_id');
     }
 
     public function scopeSource($query, $source_name)
