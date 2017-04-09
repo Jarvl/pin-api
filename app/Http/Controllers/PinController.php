@@ -53,7 +53,6 @@ class PinController extends ApiController
         $pin = new Pin;
         $pin->fill($request->all());
         $pin->save();
-
         return $this->getApiResponse();
     }
 
@@ -65,9 +64,15 @@ class PinController extends ApiController
      */
     public function show($id)
     {
-
-        return Pin::first($id)
-            ->toArray();
+        $pin = Pin::where('pin_id', '=', $id)
+            ->first();
+        if (empty($pin)) {
+            return $this->getApiResponse(400, 'A pin with that id does not exist');
+        }
+        else {
+            $this->data = $pin->toArray();
+            return $this->getApiResponse();
+        }
     }
 
     /**
@@ -101,6 +106,6 @@ class PinController extends ApiController
      */
     public function destroy($id)
     {
-        
+
     }
 }

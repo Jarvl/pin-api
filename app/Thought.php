@@ -8,6 +8,8 @@ class Thought extends Model
 {
     protected $table = 'thoughts';
 
+    protected $primaryKey = 'thought_id';
+
     protected $fillable = [
         'pin_id',
         'poster_name',

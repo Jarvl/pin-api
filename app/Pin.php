@@ -8,6 +8,8 @@ class Pin extends Model
 {
     protected $table = 'pins';
 
+    protected $primaryKey = 'pin_id';
+
     protected $fillable = [
         'pin_title',
         'pin_desc',
