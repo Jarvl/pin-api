@@ -42,8 +42,8 @@ class PinController extends ApiController
             "pin_title" => "required|string",
             "pin_desc" => "nullable|string",
             "poster_name" => "nullable|string",
-            "longitude" => "regex:/^-?\d{1,2}\.\d{6,}$/",
-            "latitude" => "regex:/^-?\d{1,2}\.\d{6,}$/",
+            "longitude" => "required|regex:/^-?\d{1,2}\.\d{6,}$/",
+            "latitude" => "required|regex:/^-?\d{1,2}\.\d{6,}$/",
             "source" => "nullable|string"
         ]);
         if ($this->validator->fails()) {
@@ -54,6 +54,9 @@ class PinController extends ApiController
         $pin->fill($request->all());
         $pin->save();
 
+        $this->data = array(
+            'pin_id' => $pin->pin_id
+        );
         return $this->getApiResponse();
     }
 

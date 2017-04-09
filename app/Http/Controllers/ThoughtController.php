@@ -78,6 +78,9 @@ class ThoughtController extends ApiController
         $thought->pin_id = $parentId;
         $thought->save();
 
+        $this->data = array(
+            'thought_id' => $thought->thought_id
+        );
         return $this->getApiResponse();
     }
 
