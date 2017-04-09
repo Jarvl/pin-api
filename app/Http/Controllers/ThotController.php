@@ -65,7 +65,6 @@ class ThotController extends ApiController
         }
 
         $this->validator = Validator::make($request->all(), [
-            "pin_id" => "required|integer",
             "poster_name" => "nullable|string",
             "thot_text" => "required|string",
             "photo_url" => "nullable"
