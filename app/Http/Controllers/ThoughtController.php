@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ThoughtController extends Controller
+class ThoughtController extends ApiController
 {
     /**
      * Display a listing of the resource.

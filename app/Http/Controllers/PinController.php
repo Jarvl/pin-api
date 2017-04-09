@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Validator;
+use App\Pin;
 
-class PinController extends Controller
+class PinController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +15,8 @@ class PinController extends Controller
      */
     public function index()
     {
-        //
+        $this->data = Pin::get()->toArray();
+        return $this->getApiResponse();
     }
 
     /**
@@ -34,7 +37,24 @@ class PinController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validator = Validator::make($request->all(), [
+            "pin_title" => "required|string",
+            "pin_desc" => "nullable|string",
+            "poster_name" => "nullable|string",
+            "longitude" => "regex:/^-?\d{1,2}\.\d{6,}$/",
+            "latitude" => "regex:/^-?\d{1,2}\.\d{6,}$/",
+            "source" => "nullable|string"
+        ]);
+
+        if ($this->validator->fails()) {
+            return $this->getApiResponse(400, 'Validation errors');
+        }
+
+        $pin = new Pin;
+        $pin->fill($request->all());
+        $pin->save();
+
+        return $this->getApiResponse();
     }
 
     /**
@@ -45,7 +65,9 @@ class PinController extends Controller
      */
     public function show($id)
     {
-        //
+
+        return Pin::first($id)
+            ->toArray();
     }
 
     /**
@@ -79,6 +101,6 @@ class PinController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

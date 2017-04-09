@@ -14,7 +14,7 @@ class Pin extends Model
         'poster_name',
         'longitude',
         'latitude',
-        'data_source',
+        'source',
     ];
 
     public function thoughts()
